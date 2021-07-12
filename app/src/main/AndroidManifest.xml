@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tpos_prosisco">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:name=".ApplicationTpos"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_logo2_app"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_logo2_app_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ReporteImeiSerialActivity"></activity>
+        <activity android:name=".activities.MovimientosActivity" />
+        <activity android:name=".activities.CobroActivity" />
+        <activity android:name=".activities.SaldoActivity" />
+        <activity android:name=".activities.MotivoActivity" />
+        <activity android:name=".activities.ClienteOpcionesActivity" />
+        <activity android:name=".activities.TrasladoActivity" />
+        <activity android:name=".activities.ReporteDiarioActivity" />
+        <activity android:name=".activities.ReporteImeiActivity" />
+        <activity android:name=".activities.AnulacionActivity" />
+        <activity android:name=".activities.RecargaActivity" />
+        <activity android:name=".activities.ProductosActivity" />
+        <activity android:name=".activities.InventarioActivity" />
+        <activity android:name=".activities.ReporteVendedorActivity" />
+        <activity android:name=".activities.ReporteFacturaActivity" />
+        <activity android:name=".activities.ReporteCategoriaActivity" />
+        <activity android:name=".activities.MenuReporteActivity" />
+        <activity android:name=".activities.ReporteVentaActivity" />
+        <activity android:name=".activities.ClientesFueraRutaActivity" />
+        <activity android:name=".activities.ClienteActivity" />
+        <activity android:name=".activities.PromocionesActivity" />
+        <activity android:name=".activities.DetalleActivity" />
+        <activity android:name=".activities.CarritoActivity" />
+        <activity android:name=".activities.VendedoresActivity" />
+        <activity android:name=".activities.ConfiguracionActivity" />
+        <activity android:name=".activities.VentaActivity" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.FacturaActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+    </application>
+
+</manifest>

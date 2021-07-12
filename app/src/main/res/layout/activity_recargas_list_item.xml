@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:padding="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+        android:id="@+id/txtRecargaCliente"
+        android:text="Venta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <TextView
+        android:id="@+id/txtRecargaTelefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monto de recarga"
+        >
+    </TextView>
+    <TextView
+        android:id="@+id/txtRecargaMonto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monto de recarga"
+        >
+    </TextView>
+</LinearLayout>

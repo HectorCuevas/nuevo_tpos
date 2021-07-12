@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="top"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/font_color"
+        android:text="Detalle de venta"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+    <EditText
+        android:backgroundTint="@color/font_color"
+        android:hint="Numero de telefono"
+        android:id="@+id/txtNumeroDeTelefono"
+        android:layout_width="match_parent"
+        android:maxLength="8"
+        android:inputType="number"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:text="Cantidad de recarga"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/opciones_sexo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <RadioButton
+            android:buttonTint="@color/font_color"
+            android:id="@+id/radio_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="10 GRATIS" />
+        <RadioButton
+            android:buttonTint="@color/font_color"
+            android:id="@+id/radio_15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="10" />
+        <RadioButton
+            android:buttonTint="@color/font_color"
+            android:id="@+id/radio_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="25 GRATIS" />
+        <RadioButton
+            android:buttonTint="@color/font_color"
+            android:id="@+id/radio_25"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="25" />
+    </RadioGroup>
+    <EditText
+        android:backgroundTint="@color/font_color"
+        android:id="@+id/txtOtros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Otra cantidad"
+        android:inputType="number"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <Button
+            android:textColor="@color/font_color"
+            android:id="@+id/button_close"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cerrar" />
+
+        <Button
+            android:textColor="@color/font_color"
+            android:id="@+id/button_ok"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aceptar" />
+    </LinearLayout>
+</LinearLayout>

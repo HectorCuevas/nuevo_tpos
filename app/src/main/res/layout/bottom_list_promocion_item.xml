@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:padding="8dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:fontFamily="sans-serif-light"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+        android:text="Codigo promo"
+        android:layout_width="match_parent"
+        android:id="@+id/lblPromocionCodigo"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/lblPromocionDesc"
+        android:text="Promocion descripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+</LinearLayout>
