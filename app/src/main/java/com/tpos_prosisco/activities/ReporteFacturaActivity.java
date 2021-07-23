@@ -69,6 +69,8 @@ public class ReporteFacturaActivity extends AppCompatActivity {
                     lottieAnimationView.setVisibility(View.VISIBLE);
                     lblMensaje.setVisibility(View.VISIBLE);
                 }
+
+                reporteVentaViewModel.getReporteFactura(ruta, dia).removeObserver(this);
             }
         });
     }

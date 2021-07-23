@@ -69,6 +69,7 @@ public class ReporteImeiActivity extends AppCompatActivity {
                     lottieAnimationView.setVisibility(View.VISIBLE);
                     lblMensaje.setVisibility(View.VISIBLE);
                 }
+                reporteVentaViewModel.getReporteImei(ruta, dia).removeObserver(this);
             }
         });
     }

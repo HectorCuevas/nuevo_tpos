@@ -49,7 +49,6 @@ public class FacturaActivity extends AppCompatActivity {
     private FacturaViewModel facturaViewModel;
     List<FacturasConDetalles> facturas = new ArrayList<>();
     List<Factura> facturasParaEnviar = new ArrayList<>();;
-    private CorrelativoService correlativoService;
     private CorrelativoViewModel correlativoViewModel;
     private ProgressDialog pdialog;
     private LottieAnimationView lottieAnimationView;
@@ -104,6 +103,7 @@ public class FacturaActivity extends AppCompatActivity {
                     lblMensaje.setVisibility(View.VISIBLE);
                 }
               //  Toast.makeText(getApplicationContext(), String.valueOf(facturas.size()), Toast.LENGTH_SHORT).show();
+                facturaViewModel.getFacturas().removeObserver(this);
             }
         });
     }
@@ -164,5 +164,7 @@ public class FacturaActivity extends AppCompatActivity {
         };
         String cod = logueoInfo.getCoSucu().trim();
         correlativoViewModel.getID(new Correlativo(IMEI,"FACTURA", cod, 0)).observe(this, observer);
+
     }
+
 }

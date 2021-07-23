@@ -57,6 +57,7 @@ public class ReporteVendedorActivity extends AppCompatActivity {
                     lblMensaje.setVisibility(View.VISIBLE);
                 }
 
+                reporteVentaViewModel.getReporteVendedor(ruta, mes).removeObserver(this);
             }
         });
     }
