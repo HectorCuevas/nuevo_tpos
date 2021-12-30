@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ApplicationTpos extends Application {
 
-    //  public static String IMEI = "0d41593f5a46a6b9";
+      //public static String IMEI = "0d41593f5a46a6b9";
       public static String IMEI = "";
       public static String API_URL = "http://grupomenas.carrierhouse.us/api_tpos_v2/api/";
       //public static String API_URL = "http://grupomenas.carrierhouse.us/api_tpos/api/";

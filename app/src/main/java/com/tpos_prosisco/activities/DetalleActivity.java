@@ -9,6 +9,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,15 +38,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.thecode.aestheticdialogs.AestheticDialog;
-import com.tpos_prosisco.ApplicationTpos;
+import com.tpos_prosisco.BuildConfig;
 import com.tpos_prosisco.PreferenceManager;
 import com.tpos_prosisco.R;
 import com.tpos_prosisco.Tools;
 import com.tpos_prosisco.ViewAnimation;
 import com.tpos_prosisco.beans.Correlativo;
 import com.tpos_prosisco.beans.Item;
-import com.tpos_prosisco.beans.Producto;
 import com.tpos_prosisco.beans.Venta;
 import com.tpos_prosisco.data.ClienteViewModel;
 import com.tpos_prosisco.data.CorrelativoViewModel;
@@ -54,6 +53,11 @@ import com.tpos_prosisco.data.ProductoViewModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -80,24 +84,21 @@ public class DetalleActivity extends AppCompatActivity {
     private TextView lblMun;
     private TextView lblZona;
     private Venta   venta = new Venta();
-    private final String CARPETA_RAIZ = "tpos/";
-    private final String RUTA_IMAGEN = CARPETA_RAIZ + "dpi";
-    private final int COD_SELECCIONA = 10;
-    private final int COD_SELECCIONA2 = 50;
-    private final int COD_FOTO = 20;
-    private final int REQUEST_CODE = 101;
-    private final int REQUEST_CODE2 = 102;
-    private static final int COD_FOTO2 = 30;
+    private final int SELECT_FROM_GALLERY_FRONT = 10;
+    private final int SELECT_FROM_GALLERY_BEHIND = 20;
+    private final int TAKE_FROM_CAMERA_FRONT = 100;
+    private final int TAKE_FROM_CAMERA_BEHIND = 200;
     private byte[] imagenEnvio;
     private byte[] imagenEnvioTrasera;
     private ImageView imagen1, imagen2;
-    private String path;
     private FacturaViewModel facturaViewModel;
     private CorrelativoViewModel correlativoViewModel;
     private ClienteViewModel clienteViewModel;
     private ProductoViewModel productoViewModel;
     private ProgressDialog pdialog;
     private Button btnFrontal, btnPosterior;
+    private String currentPhotoPath;
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,10 +146,6 @@ public class DetalleActivity extends AppCompatActivity {
             }
         });
 
-       // Toast.makeText(getApplicationContext(), String.valueOf(carrito.size()), Toast.LENGTH_SHORT).show();
-
-
-        setCamara();
         validaPermisos();
         configurarPreferencias();
         productoViewModel = ViewModelProviders.of(this)
@@ -180,10 +177,6 @@ public class DetalleActivity extends AppCompatActivity {
                     startActivity(intent);
                     carrito.clear();
                 }
-
-
-
-
             }
         });
 
@@ -386,15 +379,6 @@ public class DetalleActivity extends AppCompatActivity {
         }
     }
 
-    public static byte[] imageViewToByte(ImageView image) {
-        Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
-        // bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
-    }
-
     private boolean validaPermisos() {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -470,35 +454,22 @@ public class DetalleActivity extends AppCompatActivity {
 
     public void onclick(View view) {
         try {
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, REQUEST_CODE);
-            }else{
-                cargarImagen(COD_FOTO, COD_SELECCIONA);
-            }
+            cargarImagen(TAKE_FROM_CAMERA_FRONT, SELECT_FROM_GALLERY_FRONT);
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
     public void addSecondPhoto(View view) {
-
         try {
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, REQUEST_CODE2);
-            }else{
-                cargarImagen(COD_FOTO2, COD_SELECCIONA2);
-            }
+            cargarImagen(TAKE_FROM_CAMERA_BEHIND, SELECT_FROM_GALLERY_BEHIND);
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
-
-
     }
 
-    private void cargarImagen(final int type, final int cod_sel) {
-
+    @SuppressLint("IntentReset")
+    private void cargarImagen(final int CAMERA, final int GALLERY) {
         final CharSequence[] opciones = {"Tomar Foto", "Cargar Imagen", "Cancelar"};
         final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(DetalleActivity.this);
         alertOpciones.setTitle("Seleccione una Opción");
@@ -506,12 +477,12 @@ public class DetalleActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (opciones[i].equals("Tomar Foto")) {
-                    tomarFotografia(type);
+                    dispatchTakePictureIntent(CAMERA);
                 } else {
                     if (opciones[i].equals("Cargar Imagen")) {
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                         intent.setType("image/");
-                        startActivityForResult(intent.createChooser(intent, "Seleccione la Aplicación"), cod_sel);
+                        startActivityForResult(Intent.createChooser(intent, "Seleccione la Aplicación"), GALLERY);
                     } else {
                         dialogInterface.dismiss();
                     }
@@ -521,44 +492,41 @@ public class DetalleActivity extends AppCompatActivity {
         alertOpciones.show();
     }
 
-    private void tomarFotografia(int type) {
-        try {
-            File fileImagen = new File(Environment.getExternalStorageDirectory(), RUTA_IMAGEN);
-            boolean isCreada = fileImagen.exists();
-            String nombreImagen = "";
-            if (isCreada == false) {
-                isCreada = fileImagen.mkdirs();
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+
+    private void dispatchTakePictureIntent(final int ACTION_CODE) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                return;
             }
-
-            if (isCreada == true) {
-                nombreImagen = (System.currentTimeMillis() / 1000) + ".jpg";
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
+                        BuildConfig.APPLICATION_ID + ".provider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                uri = photoURI;
+                startActivityForResult(takePictureIntent, ACTION_CODE);
             }
-
-
-            path = Environment.getExternalStorageDirectory() +
-                    File.separator + RUTA_IMAGEN + File.separator + nombreImagen;
-
-            File imagen = new File(path);
-
-            Intent intent = null;
-            intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                String authorities = getApplicationContext().getPackageName() + ".provider";
-                Uri imageUri = FileProvider.getUriForFile(this, authorities, imagen);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            } else {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
-            }
-            if (type == COD_FOTO) {
-                startActivityForResult(intent, COD_FOTO);
-            } else {
-                startActivityForResult(intent, COD_FOTO2);
-            }
-
-        } catch (Exception ex) {
-
-            Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_LONG).show();
-
         }
     }
 
@@ -579,73 +547,65 @@ public class DetalleActivity extends AppCompatActivity {
         } else {
             return bitmap;
         }
-
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-
             switch (requestCode) {
-                case COD_SELECCIONA: {
-                    Uri miPath = data.getData();
-
-                    imagen1.setImageURI(miPath);
-                    imagenEnvio = imageViewToByte(imagen1);
+                case SELECT_FROM_GALLERY_FRONT: {
+                    uploadImageFromGallery(data, imagen1, true);
                     break;
                 }
-                case COD_SELECCIONA2: {
-                    Uri miPath = data.getData();
-                    imagen2.setImageURI(miPath);
-                    imagenEnvioTrasera = imageViewToByte(imagen2);
+                case SELECT_FROM_GALLERY_BEHIND: {
+                    uploadImageFromGallery(data, imagen2, false);
                     break;
                 }
-                case COD_FOTO: {
-                    MediaScannerConnection.scanFile(this, new String[]{path}, null, new MediaScannerConnection.OnScanCompletedListener() {
-                        @Override
-                        public void onScanCompleted(String path, Uri uri) {
-
-                        }
-                    });
-                    Bitmap bitmap = BitmapFactory.decodeFile(path);
-
-                    //funcion para redimensionar imagen
-                    imagen1.setImageBitmap(redimensionarImagen(bitmap, 700, 500));
-                    imagenEnvio = imageViewToByte(imagen1);
+                case TAKE_FROM_CAMERA_FRONT: {
+                    takeImageFromCamera(imagen1, true);
                     break;
                 }
-                case COD_FOTO2: {
-                    MediaScannerConnection.scanFile(this, new String[]{path}, null, new MediaScannerConnection.OnScanCompletedListener() {
-                        @Override
-                        public void onScanCompleted(String path, Uri uri) {
-
-                        }
-                    });
-                    Bitmap bitmap = BitmapFactory.decodeFile(path);
-
-                    //funcion para redimensionar imagen
-                    imagen2.setImageBitmap(redimensionarImagen(bitmap, 700, 500));
-                    imagenEnvioTrasera = imageViewToByte(imagen2);
-                    break;
-                }
-                case REQUEST_CODE: {
-                    Bundle extras = data.getExtras();
-                    Bitmap imgBitmap = (Bitmap) extras.get("data");
-                    imagen1.setImageBitmap(imgBitmap);
-                    imagenEnvio = imageViewToByte(imagen1);
-                    break;
-                }
-                case REQUEST_CODE2: {
-                    Bundle extras = data.getExtras();
-                    Bitmap imgBitmap = (Bitmap) extras.get("data");
-                    imagen2.setImageBitmap(imgBitmap);
-                    imagenEnvioTrasera = imageViewToByte(imagen2);
+                case TAKE_FROM_CAMERA_BEHIND: {
+                    takeImageFromCamera(imagen2, false);
                     break;
                 }
             }
         }
+    }
+
+    private void uploadImageFromGallery(Intent intent, ImageView imageView, boolean isFront){
+        Uri selectedImage = intent.getData();
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+            imageView.setImageBitmap(redimensionarImagen(bitmap, 700, 500));
+            if(isFront){
+                imagenEnvio = imageViewToByte(imageView);
+            }else imagenEnvioTrasera = imageViewToByte(imageView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void takeImageFromCamera(ImageView imageView, boolean isFront){
+        Uri selectedImage = uri;
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+            imageView.setImageBitmap(redimensionarImagen(bitmap, 700, 500));
+            if(isFront){
+                imagenEnvio = imageViewToByte(imageView);
+            }else imagenEnvioTrasera = imageViewToByte(imageView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static byte[] imageViewToByte(ImageView image) {
+        Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        // bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 
     private void configurarPreferencias() {
@@ -689,7 +649,6 @@ public class DetalleActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
     private void setCanal() {
         switch (logueoInfo.getNombreCanal()) {
             case "MASIVO":
@@ -702,7 +661,6 @@ public class DetalleActivity extends AppCompatActivity {
             default:
                 break;
         }
-
         deleteById();
     }
 
@@ -715,14 +673,4 @@ public class DetalleActivity extends AppCompatActivity {
             productoViewModel.deleteById(item.getProducto());
         }
     }
-
-    private void setCamara(){
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            //btnPosterior.setVisibility(View.GONE);
-        }else{
-
-        }
-    }
-
-
 }

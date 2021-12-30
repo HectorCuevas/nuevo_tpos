@@ -163,7 +163,9 @@ public class CarritoActivity extends AppCompatActivity implements SearchView.OnQ
             public void onChanged(List<Promocion> dbpromociones) {
                 promociones = dbpromociones;
                 //   Toast.makeText(getApplicationContext(), String.valueOf(promociones.size()), Toast.LENGTH_LONG).show();
+                promocionViewModel.getDBPromociones().removeObserver(this);
             }
+
         });
     }
 
@@ -219,16 +221,21 @@ public class CarritoActivity extends AppCompatActivity implements SearchView.OnQ
                 precio = producto.getPrecVta5();
                 break;
         }
-        carrito.add(new Item(producto, 1, setDescuento(precio, promocion.getPorDescuento())));
+        Item item = new Item(producto, 1, setDescuento(precio, promocion.getPorDescuento()));
+        carrito.add(item);
+        // cosas por hacer: ver que pasa cuando se agrega un numero de telefono, tratar de amarrar la
+        // recarga a su producto por medio del numero de telefono
+        //revisar audios de hector
         setBonifcacion(1);
-        //verficamos que no sea 0 para agregar la recarga
-       /* if ((ApplicationTpos.promocion.getCantidadTA() != 999) || (ApplicationTpos.promocion.getCantidadTA() != 0) ) {
-            addItemExtra(promocion.getCantidadTA(), producto.getTel(), promocion.getPorDescuento() , logueoInfo.getCodigoTA());
-        }*/
         if (ApplicationTpos.promocion.getCantidadTA() != 0) {
             addItemExtra(promocion.getCantidadTA(), producto.getTel(), promocion.getPorDescuento(), logueoInfo.getCodigoTA());
         }
+
+        item.getProducto().setCantidadAsociada(promocion.getCantidadTA());
+
         setTotal();
+
+
         // mBottomSheetDialog.dismiss();
     }
 
@@ -369,10 +376,6 @@ public class CarritoActivity extends AppCompatActivity implements SearchView.OnQ
 
     double setDescuento(double precioVenta, double porcentaje) {
         return precioVenta - ((precioVenta * porcentaje) / 100);
-    }
-
-    private boolean checkSerial(Producto producto) {
-        return producto.getSerial().equals("");
     }
 
     int setCantidadDescuento(int cantidad, int bonificacion) {

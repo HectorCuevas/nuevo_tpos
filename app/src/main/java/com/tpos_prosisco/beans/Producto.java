@@ -46,7 +46,19 @@ public class Producto {
     @SerializedName("prec_vta5")
     @Expose
     private Double precVta5;
+    //este telefono es para los productos que requieran numero de telefono
     private int tel;
+    // este es la cantidad asociada para unir la recarga con la simcard por medio del telefono osea este campo
+    private int cantidadAsociada;
+
+    public int getCantidadAsociada() {
+        return cantidadAsociada;
+    }
+
+    public void setCantidadAsociada(int cantidadAsociada) {
+        this.cantidadAsociada = cantidadAsociada;
+    }
+
 
     public String getComentario() {
         return comentario;

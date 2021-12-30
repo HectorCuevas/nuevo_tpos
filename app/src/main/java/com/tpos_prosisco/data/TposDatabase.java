@@ -29,7 +29,7 @@ import com.tpos_prosisco.beans.Vendedor;
         DetalleFactura.class,
         Cliente.class
 }
-        , version = 21
+        , version = 22
         , exportSchema = false
 )
 public abstract class TposDatabase extends RoomDatabase {

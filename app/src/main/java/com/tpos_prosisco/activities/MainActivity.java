@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 ) {
                     vendedorViewModel.insertVendedor(vendedor);
                 }
+                vendedorViewModel.getVendedores(logueoInfo.getCoSucu()).removeObserver(this);
             }
         });
     }

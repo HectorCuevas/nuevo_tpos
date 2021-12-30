@@ -9,12 +9,30 @@ public class Item {
         this.producto = producto;
         this.cantidad = cantidad;
         this.precio = precio;
+        this.esPaneles = false;
+
+    }
+    public Item(Producto producto, int cantidad, Double precVta1, boolean b) {
+        this.producto = producto;
+        this.cantidad = cantidad;
+        this.precio = precVta1;
+        this.esPaneles = b;
     }
 
     private Producto producto;
     private int cantidad;
     private double precio;
+    private boolean esPaneles;
 
+
+
+    public boolean isEsPaneles() {
+        return esPaneles;
+    }
+
+    public void setEsPaneles(boolean esPaneles) {
+        this.esPaneles = esPaneles;
+    }
 
     public Producto getProducto() {
         return producto;

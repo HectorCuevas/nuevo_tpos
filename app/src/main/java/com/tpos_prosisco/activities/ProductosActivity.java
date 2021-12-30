@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.tpos_prosisco.ApplicationTpos.carrito;
+import static com.tpos_prosisco.ApplicationTpos.logueoInfo;
 
 public class ProductosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private List<Producto> items = new ArrayList<Producto>();
@@ -136,11 +137,19 @@ public class ProductosActivity extends AppCompatActivity implements SearchView.O
                 EditText txtcantidad = modal_cantidad.findViewById(R.id.txtCantidadDialog);
                 int cantidad = Integer.parseInt(txtcantidad.getText().toString());
                 producto.setTel(0);
-                carrito.add(new Item(producto, cantidad, producto.getPrecVta1()));
+                carrito.add(checkChannel(producto, cantidad));
                 mBottomSheetDialog.dismiss();
                 setTotal();
             }
         });
+    }
+
+    private Item checkChannel(Producto producto, int cantidad){
+        if(logueoInfo.getNombreCanal().equals("PANELES")){
+            return new Item(producto, cantidad, producto.getPrecVta1(), true);
+        }else{
+            return new Item(producto, cantidad, producto.getPrecVta1());
+        }
     }
 
     private void getTelefono(Producto producto) {

@@ -322,7 +322,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onBackPressed();
     }
     @SuppressLint("HardwareIds")
-    public  String getDeviceId(Context context) {
+    public String getDeviceId(Context context) {
 
         String deviceId;
 
@@ -372,7 +372,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }else{
 
-                    Toast.makeText(getApplicationContext(), "Estoy en el else", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Estoy en el else", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -17,9 +17,7 @@ import com.tpos_prosisco.R;
 import com.tpos_prosisco.activities.ConfiguracionActivity;
 import com.tpos_prosisco.activities.VendedoresActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class VendedoresFragment extends Fragment {
     private GridLayout mainGrid;
 
