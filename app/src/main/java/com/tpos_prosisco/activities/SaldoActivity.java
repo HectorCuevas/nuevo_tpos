@@ -86,7 +86,8 @@ public class SaldoActivity extends AppCompatActivity {
         String str = "*977*3*<pos tienda>*<pin>#";
         str = logueoInfo.getUssdSaldo();
         String ussd = str
-                .replace("<pos tienda>", numero) + "#";
+                .replace("LLAMAR", "")
+                .replace("<pos tienda>", numero) ;
         return ussd;
     }
     private Uri ussdToCallableUri(String ussd) {

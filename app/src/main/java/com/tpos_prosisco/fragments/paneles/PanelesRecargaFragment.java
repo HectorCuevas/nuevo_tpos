@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.tpos_prosisco.ApplicationTpos;
 import com.tpos_prosisco.R;
+import com.tpos_prosisco.activities.MainActivity;
 import com.tpos_prosisco.activities.ProductosActivity;
 import com.tpos_prosisco.adapters.RecargasAdapter;
 import com.tpos_prosisco.beans.Item;
@@ -100,7 +101,14 @@ public class PanelesRecargaFragment extends Fragment {
 
             }
         });
-
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cambiarActividad = new Intent(getContext(), MainActivity.class);
+                startActivity(cambiarActividad);
+                ApplicationTpos.carrito.clear();
+            }
+        });
 
         return view;
     }

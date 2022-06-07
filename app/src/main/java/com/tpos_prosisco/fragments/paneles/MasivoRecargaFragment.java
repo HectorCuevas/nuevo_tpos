@@ -156,7 +156,6 @@ public class MasivoRecargaFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent cambiarActividad = new Intent(getContext(), MainActivity.class);
                 startActivity(cambiarActividad);
                 ApplicationTpos.carrito.clear();
@@ -203,7 +202,7 @@ public class MasivoRecargaFragment extends Fragment {
         int tel = 0;
         switch (logueoInfo.getNombreCanal()) {
             case "MASIVO":
-                if(!nuevaVenta.getCliente().getTelefonos().equals("")){
+                if(!nuevaVenta.getCliente().getTelefonos().trim().isEmpty()){
                     String tels = telefonos;
                     arrTels = tels.split("-");
                     // tel = Integer.parseInt(arrTels[0]);
