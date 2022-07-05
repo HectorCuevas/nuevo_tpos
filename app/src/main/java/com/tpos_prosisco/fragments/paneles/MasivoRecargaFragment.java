@@ -78,7 +78,7 @@ public class MasivoRecargaFragment extends Fragment {
         //clientes fuera de ruta busqueda
 
         for(Item item : ApplicationTpos.carrito){
-            if(item.getProducto().getCoArt().contains("ORGA.01")){
+            if(item.getProducto().getCoArt().trim().equals(logueoInfo.getCodigoTA().trim())){
                 Recarga recarga = new Recarga();
                 if(logueoInfo.getNombreCanal().contains("MASIVO")){
                     //cantidad para clientes que tengan telefonos

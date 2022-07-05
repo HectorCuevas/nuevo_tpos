@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ReporteImeiSerialActivity"></activity>
+        <activity android:name=".ReporteImeiSerialActivity" />
         <activity android:name=".activities.MovimientosActivity" />
         <activity android:name=".activities.CobroActivity" />
         <activity android:name=".activities.SaldoActivity" />

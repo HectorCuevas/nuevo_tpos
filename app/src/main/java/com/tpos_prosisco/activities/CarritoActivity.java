@@ -285,7 +285,7 @@ public class CarritoActivity extends AppCompatActivity implements SearchView.OnQ
             total = total + (producto.getCantidad() * producto.getPrecio());
         }
         carritoAdapter.notifyDataSetChanged();
-        lblTotal.setText("Q" + String.valueOf(total));
+        lblTotal.setText(ApplicationTpos.CARACTER_MONEDA + String.valueOf(total));
         lblITems.setText(String.valueOf(carrito.size()));
         return total;
     }
