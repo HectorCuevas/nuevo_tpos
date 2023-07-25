@@ -32,7 +32,7 @@ import retrofit2.Response;
 import static com.tpos_prosisco.ApplicationTpos.IMEI;
 import static com.tpos_prosisco.ApplicationTpos.logueoInfo;
 
-public class FacturaRepository {
+public class  FacturaRepository {
 
     private AppClient appClient;
     private FacturaService facturaService;

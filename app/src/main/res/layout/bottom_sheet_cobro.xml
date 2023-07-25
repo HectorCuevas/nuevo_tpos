@@ -14,8 +14,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
     <EditText
         android:id="@+id/txtCantidadDialog"
-        android:inputType="number"
-        android:maxLength="5"
+        android:inputType="numberDecimal"
+        android:maxLength="9"
         android:layout_below="@+id/lbl_tCAntidad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

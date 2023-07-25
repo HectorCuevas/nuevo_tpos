@@ -1,7 +1,9 @@
 package com.tpos_prosisco.activities;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -14,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -72,15 +76,13 @@ public class FacturaActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (isNetworkConnected()) {
-                    Factura factura = facturasParaEnviar.get(position);
-                    // facturasConDetalles.get(0).detalleFacturaList;
-                    sendFactura2(factura, position);
+                    createSimpleDialog(position);
+
                 }else{
                     AestheticDialog.showConnectify(FacturaActivity.this, "No cuenta con conexión a internet", AestheticDialog.ERROR);
                 }
             }
         });
-
     }
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -136,7 +138,33 @@ public class FacturaActivity extends AppCompatActivity {
        // Toast.makeText(getApplicationContext(), String.valueOf(facturasParaEnviar.size()), Toast.LENGTH_SHORT).show();
     }
 
+    public void createSimpleDialog(int pos) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage("Desea enviar la factura?");
+        builder1.setCancelable(true);
 
+        FacturasConDetalles factura =  (FacturasConDetalles) facturaAdapter.getItem(pos);// .get(position);
+        builder1.setPositiveButton(
+                "Enviar",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        sendFactura2(factura.factura, pos);
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "Eliminar factura",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        facturaViewModel.deleteById(factura.factura);
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
 
     private void sendFactura2(Factura factura, int pos) {
         pdialog = new ProgressDialog(FacturaActivity.this);
@@ -164,7 +192,6 @@ public class FacturaActivity extends AppCompatActivity {
         };
         String cod = logueoInfo.getCoSucu().trim();
         correlativoViewModel.getID(new Correlativo(IMEI,"FACTURA", cod, 0)).observe(this, observer);
-
     }
 
 }

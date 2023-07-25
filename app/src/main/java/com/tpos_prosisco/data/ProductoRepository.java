@@ -48,13 +48,17 @@ public class ProductoRepository {
                 if(response.isSuccessful()){
                     respuesta = Arrays.asList(response.body().getProductos());
                     productos.setValue(respuesta);
+                    for (Producto producto : respuesta
+                    ) {
+                        insert(producto);
+                    }
                 }else{
                     Toast.makeText(ApplicationTpos.getInstance(), "Algo ha salido mal: productos", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<ProductoResponse> call, Throwable t) {
-                Toast.makeText(ApplicationTpos.getInstance(), "Algo ha salido mal" + t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ApplicationTpos.getInstance(), "Algo ha salido mal: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

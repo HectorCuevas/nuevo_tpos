@@ -143,7 +143,6 @@ public class CarritoActivity extends AppCompatActivity implements SearchView.OnQ
                                             .trim()
                             )
                     ) {
-
                         items.add(item);
                     }
                 }
@@ -228,7 +227,8 @@ public class CarritoActivity extends AppCompatActivity implements SearchView.OnQ
         //revisar audios de hector
         setBonifcacion(1);
         if (ApplicationTpos.promocion.getCantidadTA() != 0) {
-            addItemExtra(promocion.getCantidadTA(), producto.getTel(), promocion.getPorDescuento(), logueoInfo.getCodigoTA());
+            addItemExtra(promocion.getCantidadTA(), producto.getTel(), promocion.getPorDescuento(),
+                    logueoInfo.getCodigoTA());
         }
 
         item.getProducto().setCantidadAsociada(promocion.getCantidadTA());

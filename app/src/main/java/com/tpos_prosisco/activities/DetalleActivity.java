@@ -38,6 +38,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tpos_prosisco.ApplicationTpos;
 import com.tpos_prosisco.BuildConfig;
 import com.tpos_prosisco.PreferenceManager;
 import com.tpos_prosisco.R;
@@ -70,7 +71,7 @@ public class DetalleActivity extends AppCompatActivity {
 
     private NestedScrollView nested_scroll_view;
     private ImageButton img_datos, img_datos_ubicacion, img_fotografias;
-    private Button btn_ocultar_datos, btn_ocultar_datos_ubicacion, btnConfirmar, btn_ocultar_fotografias;
+    private Button btn_ocultar_datos, btn_ocultar_datos_ubicacion, btnConfirmar, btnSave, btn_ocultar_fotografias;
     private View lyDatosPersonales, lyDatosUbicacion, lyFotografias;
     private EditText txtDireccionRecarga;
     private EditText txtDpi;
@@ -131,6 +132,7 @@ public class DetalleActivity extends AppCompatActivity {
         rgOpcionesPago = (RadioGroup) findViewById(R.id.radioGroup_opciones_pago);
 
         btnConfirmar = findViewById(R.id.btnECheckout);
+        btnSave = findViewById(R.id.btnSave);
 
         rbContado.setChecked(true);
         venta.setCondicionPago("CONT");
@@ -167,6 +169,8 @@ public class DetalleActivity extends AppCompatActivity {
                         setCanal();
                         Intent intent = new Intent(DetalleActivity.this, RecargaActivity.class);
                         startActivity(intent);
+                        //Toast.makeText(getApplicationContext(), "Factura almacenada", Toast.LENGTH_LONG).show();
+                        //insert();
                     } else
                         Toast.makeText(getApplicationContext(), "Debe completar los campos!", Toast.LENGTH_LONG).show();
                 } else {
@@ -179,6 +183,24 @@ public class DetalleActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getClienteDireccion();
+                if (getClienteinfo()) {
+                    getFotos();
+                    //sendFactura();
+                    setCanal();
+                    Intent intent = new Intent(DetalleActivity.this, RecargaActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "Factura almacenada", Toast.LENGTH_LONG).show();
+                    insert();
+                } else
+                    Toast.makeText(getApplicationContext(), "Debe completar los campos!", Toast.LENGTH_LONG).show();
+            }
+        });
+
 
     }
 
@@ -196,7 +218,8 @@ public class DetalleActivity extends AppCompatActivity {
                 pdialog = null;
             }
         };
-        correlativoViewModel.getID(new Correlativo(IMEI,"FACTURA", "10201", 0)).observe(this, observer);
+        correlativoViewModel.getID(new Correlativo(IMEI,"FACTURA",
+                logueoInfo.getCoSucu().trim(), 0)).observe(this, observer);
     }
 
     private void insert() {
@@ -578,7 +601,7 @@ public class DetalleActivity extends AppCompatActivity {
         Uri selectedImage = intent.getData();
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            imageView.setImageBitmap(redimensionarImagen(bitmap, 700, 500));
+            imageView.setImageBitmap(redimensionarImagen(bitmap, 762, 500));
             if(isFront){
                 imagenEnvio = imageViewToByte(imageView);
             }else imagenEnvioTrasera = imageViewToByte(imageView);
@@ -590,7 +613,7 @@ public class DetalleActivity extends AppCompatActivity {
         Uri selectedImage = uri;
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            imageView.setImageBitmap(redimensionarImagen(bitmap, 700, 500));
+            imageView.setImageBitmap(redimensionarImagen(bitmap, 762, 500));
             if(isFront){
                 imagenEnvio = imageViewToByte(imageView);
             }else imagenEnvioTrasera = imageViewToByte(imageView);

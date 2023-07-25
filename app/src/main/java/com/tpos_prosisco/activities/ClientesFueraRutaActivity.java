@@ -63,9 +63,13 @@ public class ClientesFueraRutaActivity extends AppCompatActivity implements Sear
         clienteViewModel.getDBClientesFueraRuta().observe(ClientesFueraRutaActivity.this, new Observer<List<Cliente>>() {
             @Override
             public void onChanged(List<Cliente> clientes) {
+                if(clientes.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Cargando...", Toast.LENGTH_LONG).show();
+                }else{
                 clientesArray = clientes;
                 clienteAdapter = new ClienteAdapter(getApplicationContext(), clientes);
                 lstClientes.setAdapter(clienteAdapter);
+                }
             }
         });
     }

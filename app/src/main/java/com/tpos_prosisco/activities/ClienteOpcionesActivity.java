@@ -38,7 +38,7 @@ public class ClienteOpcionesActivity extends AppCompatActivity {
                     Fragment fragment = null;
                     switch (finalI){
                         case 0:
-                            if(nuevaVenta.getCliente().getSaldo() == 0){
+                            if(nuevaVenta.getCliente().getSaldo() == 0.0){
                                 Intent i = new Intent(ClienteOpcionesActivity.this, PromocionesActivity.class);
                                 startActivity(i);
                             }else

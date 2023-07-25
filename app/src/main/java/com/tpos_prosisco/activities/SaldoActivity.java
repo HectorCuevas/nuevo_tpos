@@ -73,10 +73,8 @@ public class SaldoActivity extends AppCompatActivity {
 
     private void getTels(String str){
         if(!str.isEmpty()){
-            int tel = 0;
             String tels = str;
             arrTels = tels.split("-");
-            tel = Integer.parseInt(arrTels[0]);
             listTels.addAll(Arrays.asList(arrTels));
         }else{
             Toast.makeText(getApplicationContext(), "El cliente no tiene numeros de telefonos agregados", Toast.LENGTH_SHORT).show();

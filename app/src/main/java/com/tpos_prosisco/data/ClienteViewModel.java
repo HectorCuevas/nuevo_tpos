@@ -37,7 +37,7 @@ public class ClienteViewModel extends AndroidViewModel {
         return clienteRepository.getDBClientesFueraRuta();
     }
 
-
+    @Deprecated
     public void insertCliente(Cliente cliente){
         clienteRepository.insert(cliente);
     }

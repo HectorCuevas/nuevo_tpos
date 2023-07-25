@@ -16,4 +16,7 @@ public interface SesionDao {
 
     @Query("SELECT * FROM LOGUEO")
     LiveData<List<Logueo>> getAll();
+
+    @Query("DELETE FROM LOGUEO")
+    void deleteAlllogueos();
 }

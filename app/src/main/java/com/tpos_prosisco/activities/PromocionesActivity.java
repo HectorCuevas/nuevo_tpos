@@ -71,8 +71,8 @@ public class PromocionesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(ApplicationTpos.carrito.size()!=0){
-                    //Intent i = new Intent(PromocionesActivity.this, DetalleActivity.class);
-                    Intent i = new Intent(PromocionesActivity.this, RecargaActivity.class);
+                    Intent i = new Intent(PromocionesActivity.this, DetalleActivity.class);
+                    //Intent i = new Intent(PromocionesActivity.this, RecargaActivity.class);
                     startActivity(i);
                 }else{
                     Toast.makeText(getApplicationContext(), "Debe agregar articulos", Toast.LENGTH_SHORT).show();

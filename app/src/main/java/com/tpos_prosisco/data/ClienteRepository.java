@@ -2,6 +2,7 @@ package com.tpos_prosisco.data;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -45,6 +46,11 @@ public class ClienteRepository {
                    // Object o = response.body();
                     clientes = Arrays.asList(response.body().getClientes());
                     clientesMut.setValue(clientes);
+                    for (Cliente cliente : clientes) {
+                        insert(cliente);
+                        Log.d("INSERTADO", cliente.getCoCli());
+                    }
+
                 }else{
                     Toast.makeText(ApplicationTpos.getInstance(), "Algo ha salido mal", Toast.LENGTH_LONG).show();
                 }

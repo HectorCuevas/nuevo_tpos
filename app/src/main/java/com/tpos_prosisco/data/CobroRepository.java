@@ -19,6 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import static com.tpos_prosisco.ApplicationTpos.IMEI;
+import static com.tpos_prosisco.ApplicationTpos.nuevaVenta;
 
 /**
  * Creada por Norman el 11/18/2020
@@ -86,6 +87,8 @@ public class CobroRepository {
                 if(response.isSuccessful()) {
                     if(Integer.parseInt(value.toString()) > 0){
                         Toast.makeText(ApplicationTpos.getInstance(), "Enviado exitosamente", Toast.LENGTH_LONG).show();
+                        Double saldo = nuevaVenta.getCliente().getSaldo() -  cobro.getPCOBRO();
+                        nuevaVenta.getCliente().setSaldo(saldo);
                     }else{
                         Toast.makeText(ApplicationTpos.getInstance(), "Algo ha ido mal: No se ha enviado el cobro", Toast.LENGTH_LONG).show();
                     }

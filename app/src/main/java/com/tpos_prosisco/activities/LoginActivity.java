@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -144,13 +145,14 @@ public class LoginActivity extends AppCompatActivity {
             String ruta = logueo.getCoSucu().trim();
             String canal = logueo.getIdCanalVenta().toString();
             CARACTER_MONEDA = logueo.getSimboloMoneda().trim();
+
+
             getDBClientes(ruta, logueo.getNombreCanal());
             getDBVendedores(ruta);
             getDBPromociones(canal);
             getDBProductos(ruta);
+
             /** sucursal lista **/
-
-
         }else{
             pdialog.dismiss();
             pdialog = null;
@@ -164,9 +166,10 @@ public class LoginActivity extends AppCompatActivity {
         clienteViewModel.getClientes(ruta, canal).observe(LoginActivity.this, new Observer<List<Cliente>>() {
             @Override
             public void onChanged(List<Cliente> clientes) {
-                for (Cliente cliente : clientes) {
+               /* for (Cliente cliente : clientes) {
                     clienteViewModel.insertCliente(cliente);
-                }
+                    Log.d("INSERTADO", cliente.getCoCli());
+                }*/
             }
         });
     }
@@ -175,10 +178,10 @@ public class LoginActivity extends AppCompatActivity {
         productoViewModel.getProductos(ruta).observe(LoginActivity.this, new Observer<List<Producto>>() {
             @Override
             public void onChanged(List<Producto> productos) {
-                for (Producto producto : productos
+              /*  for (Producto producto : productos
                 ) {
                     productoViewModel.insertProducto(producto);
-                }
+                }*/
             }
         });
     }
@@ -244,12 +247,11 @@ public class LoginActivity extends AppCompatActivity {
         clienteViewModel.getDBClientes().observe(LoginActivity.this, new Observer<List<Cliente>>() {
             @Override
             public void onChanged(List<Cliente> clientes) {
-                if (clientes.size() == 0) {
+                if (clientes.isEmpty()) {
                     getClientes(ruta, canal);
                     clienteViewModel.getDBClientes().removeObserver(this);
                 }
             }
-
         });
     }
 
@@ -371,8 +373,9 @@ public class LoginActivity extends AppCompatActivity {
                         pdialog = null;
                     }
                 }else{
-
-                    //Toast.makeText(getApplicationContext(), "Estoy en el else", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Error en el servidor - Contacte al administrador", Toast.LENGTH_SHORT).show();
+                    pdialog.dismiss();
+                    pdialog = null;
                 }
             }
 

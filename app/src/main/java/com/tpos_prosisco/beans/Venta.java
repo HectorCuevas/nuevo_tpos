@@ -4,10 +4,10 @@ import androidx.annotation.Nullable;
 
 public class Venta {
 
-    private String nombre;
+    private String nombre = "";
     private int numero;
-    private String dpi;
-    private String nit;
+    private String dpi = "";
+    private String nit= "";
     private int zona;
     private String municipio;
     private String depto;

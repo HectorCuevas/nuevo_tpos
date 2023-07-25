@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.tpos_prosisco.ApplicationTpos;
 import com.tpos_prosisco.R;
 import com.tpos_prosisco.adapters.CobroAdapter;
 import com.tpos_prosisco.beans.Cobro;
@@ -60,8 +61,8 @@ public class CobroActivity extends AppCompatActivity {
                .get(CobroViewModel.class);
 
 
-
-        getCobros(logueoInfo.getCoSucu().trim());
+        String co_cli = nuevaVenta.getCliente().getCoCli().trim();
+        getCobros(co_cli);
 
         lstCobros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

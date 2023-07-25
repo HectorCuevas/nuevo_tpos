@@ -29,6 +29,7 @@ public class ProductoViewModel extends AndroidViewModel {
         productoRepository.deleteById(producto);
     }
 
+    @Deprecated
     public void insertProducto(Producto producto){
         productoRepository.insert(producto);
     }

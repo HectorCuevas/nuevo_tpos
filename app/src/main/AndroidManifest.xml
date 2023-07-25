@@ -28,34 +28,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ReporteImeiSerialActivity" />
-        <activity android:name=".activities.MovimientosActivity" />
-        <activity android:name=".activities.CobroActivity" />
-        <activity android:name=".activities.SaldoActivity" />
-        <activity android:name=".activities.MotivoActivity" />
-        <activity android:name=".activities.ClienteOpcionesActivity" />
-        <activity android:name=".activities.TrasladoActivity" />
-        <activity android:name=".activities.ReporteDiarioActivity" />
-        <activity android:name=".activities.ReporteImeiActivity" />
-        <activity android:name=".activities.AnulacionActivity" />
-        <activity android:name=".activities.RecargaActivity" />
-        <activity android:name=".activities.ProductosActivity" />
-        <activity android:name=".activities.InventarioActivity" />
-        <activity android:name=".activities.ReporteVendedorActivity" />
-        <activity android:name=".activities.ReporteFacturaActivity" />
-        <activity android:name=".activities.ReporteCategoriaActivity" />
-        <activity android:name=".activities.MenuReporteActivity" />
-        <activity android:name=".activities.ReporteVentaActivity" />
-        <activity android:name=".activities.ClientesFueraRutaActivity" />
-        <activity android:name=".activities.ClienteActivity" />
-        <activity android:name=".activities.PromocionesActivity" />
-        <activity android:name=".activities.DetalleActivity" />
-        <activity android:name=".activities.CarritoActivity" />
-        <activity android:name=".activities.VendedoresActivity" />
-        <activity android:name=".activities.ConfiguracionActivity" />
-        <activity android:name=".activities.VentaActivity" />
-        <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".ReporteImeiSerialActivity" android:exported="false" />
+        <activity android:name=".activities.MovimientosActivity" android:exported="false" />
+        <activity android:name=".activities.CobroActivity" android:exported="false" />
+        <activity android:name=".activities.SaldoActivity" android:exported="false" />
+        <activity android:name=".activities.MotivoActivity" android:exported="false" />
+        <activity android:name=".activities.ClienteOpcionesActivity" android:exported="false" />
+        <activity android:name=".activities.TrasladoActivity" android:exported="false" />
+        <activity android:name=".activities.ReporteDiarioActivity" android:exported="false" />
+        <activity android:name=".activities.ReporteImeiActivity" android:exported="false" />
+        <activity android:name=".activities.AnulacionActivity" android:exported="false" />
+        <activity android:name=".activities.RecargaActivity" android:exported="false" />
+        <activity android:name=".activities.ProductosActivity" android:exported="false" />
+        <activity android:name=".activities.InventarioActivity" android:exported="false" />
+        <activity android:name=".activities.ReporteVendedorActivity" android:exported="false" />
+        <activity android:name=".activities.ReporteFacturaActivity" android:exported="false" />
+        <activity android:name=".activities.ReporteCategoriaActivity" android:exported="false" />
+        <activity android:name=".activities.MenuReporteActivity"  android:exported="false"/>
+        <activity android:name=".activities.ReporteVentaActivity" android:exported="false" />
+        <activity android:name=".activities.ClientesFueraRutaActivity" android:exported="false" />
+        <activity android:name=".activities.ClienteActivity" android:exported="false" />
+        <activity android:name=".activities.PromocionesActivity" android:exported="false" />
+        <activity android:name=".activities.DetalleActivity" android:exported="false" />
+        <activity android:name=".activities.CarritoActivity" android:exported="false" />
+        <activity android:name=".activities.VendedoresActivity"  android:exported="false"/>
+        <activity android:name=".activities.ConfiguracionActivity" android:exported="false" />
+        <activity android:name=".activities.VentaActivity" android:exported="false" />
+        <activity android:name=".activities.MainActivity" android:exported="false" />
+        <activity android:name=".activities.LoginActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

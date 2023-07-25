@@ -46,9 +46,10 @@ public class SesionRepository {
             public void onResponse(Call<LogueoResponse> call, Response<LogueoResponse> response) {
                 Object value = response.body();
                 if (response.isSuccessful()) {
-                    Object o = response.body();
+                    //Object o = response.body();
                     logueos = Arrays.asList(response.body().getLogueos());
                     //logueosMut.setValue(logueos);
+                    delete();
                     for(Logueo logueo : logueos){
                         insert(logueo);
                         ApplicationTpos.logueoInfo = logueo;
@@ -91,6 +92,10 @@ public class SesionRepository {
         new insertAsync(sesionDao).execute(logueo);
     }
 
+    public void delete(){
+        new deleteAsync(sesionDao).execute();
+    }
+
     public LiveData<List<Logueo>> getDBinfoLogueo(){
         return sesionDao.getAll();
     }
@@ -108,4 +113,18 @@ public class SesionRepository {
             return null;
         }
     }
+    private static class deleteAsync extends AsyncTask<Logueo, Void, Void> {
+        private SesionDao sesionDaoAsync;
+
+        deleteAsync(SesionDao sesionDao){
+            sesionDaoAsync = sesionDao;
+        }
+
+        @Override
+        protected Void doInBackground(Logueo... logueos) {
+            sesionDaoAsync.deleteAlllogueos();
+            return null;
+        }
+    }
+
 }

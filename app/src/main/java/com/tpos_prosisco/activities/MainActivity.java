@@ -165,10 +165,10 @@ public class MainActivity extends AppCompatActivity {
         productoViewModel.getProductos(ruta).observe(MainActivity.this, new Observer<List<Producto>>() {
             @Override
             public void onChanged(List<Producto> productos) {
-                for (Producto producto : productos
+                /*for (Producto producto : productos
                 ) {
                     productoViewModel.insertProducto(producto);
-                }
+                }*/
             }
         });
     }
@@ -176,9 +176,9 @@ public class MainActivity extends AppCompatActivity {
         clienteViewModel.getClientes(ruta, canal).observe(MainActivity.this, new Observer<List<Cliente>>() {
             @Override
             public void onChanged(List<Cliente> clientes) {
-                for (Cliente cliente : clientes) {
+               /* for (Cliente cliente : clientes) {
                     clienteViewModel.insertCliente(cliente);
-                }
+                }*/
             }
         });
     }

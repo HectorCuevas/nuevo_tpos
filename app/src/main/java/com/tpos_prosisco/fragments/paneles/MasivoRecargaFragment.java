@@ -188,7 +188,7 @@ public class MasivoRecargaFragment extends Fragment {
                 .replace("<pin>", logueoInfo.getPin().trim())
                 .replace("<pos tienda>", String.valueOf(recarga.getNumero()))
                 .replace("<cantidad>", String.valueOf(recarga.getMonto()))
-                .replace("LLAMAR", "") + "#";
+                .replace("LLAMAR", "");
         return ussd;
     }
 

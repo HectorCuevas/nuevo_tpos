@@ -68,10 +68,14 @@ public class ClienteActivity extends AppCompatActivity implements SearchView.OnQ
         clienteViewModel.getDBClientes().observe(ClienteActivity.this, new Observer<List<Cliente>>() {
             @Override
             public void onChanged(List<Cliente> clientes) {
-                clientesArray = clientes;
-                clienteAdapter = new ClienteAdapter(getApplicationContext(), clientes);
-                lstClientes.setAdapter(clienteAdapter);
-                clienteAdapter.notifyDataSetChanged();
+                if(clientes.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Cargando...", Toast.LENGTH_LONG).show();
+                }else{
+                    clientesArray = clientes;
+                    clienteAdapter = new ClienteAdapter(getApplicationContext(), clientes);
+                    lstClientes.setAdapter(clienteAdapter);
+                    clienteAdapter.notifyDataSetChanged();
+                }
             }
         });
     }
